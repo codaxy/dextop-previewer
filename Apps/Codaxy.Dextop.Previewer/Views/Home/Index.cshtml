@@ -1,0 +1,74 @@
+﻿@model Codaxy.Dextop.Previewer.Models.PreviewModel
+
+@{
+    ViewBag.Title = "Grid";
+}
+
+<script src="@Url.Content("~/client/lib/ext/ext-all.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/client/lib/dextop/js/Dextop.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/client/lib/dextop/js/ItemFactory.js")" type="text/javascript"></script>
+
+<link href="@Url.Content("~/client/lib/ext/resources/css/ext-all.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    @Model.InlineJsCode
+</script>
+
+@if (Request.IsLocal && !Model.IsUpload)
+{
+    <h2>Dextop Previewer</h2>
+    <div class="form">
+@using (var form = Html.BeginForm())
+{    
+    @: Enter the path of the local target C# file: 
+    @Html.EditorFor(a => a.FilePath, Model.FilePath);    
+    <input type="submit" value="Submit" />}
+</div>
+}
+
+<script type="text/javascript">   
+
+    Ext.onReady(function () {
+       
+        var i = 0;
+        var remote = {
+            createStore: function () {
+                return [];
+            }
+        };
+
+        Ext.ns('Previewer');
+
+        if (Previewer.form)
+            for (var f in Previewer.form) {
+                var name = "form" + (++i);
+                Ext.core.DomHelper.append(document.body, '<h3>' + f + ' Form' + '</h3>');
+                Ext.core.DomHelper.append(document.body, '<div id="' + name + '" class="ext-form"></div>');
+                Ext.create('Ext.form.Panel', {
+                    border: false,
+                    bodyStyle: 'padding: 5px',
+                    width: 500,
+                    renderTo: name,
+                    items: Ext.create('Previewer.form.' + f).getItems({ remote: remote })
+                });
+            }
+        if (Previewer.columns)
+            for (var g in Previewer.columns) {
+                var name = "grid" + (++i);
+                Ext.core.DomHelper.append(document.body, '<h3>' + g + ' Grid' + '</h3>');
+                Ext.core.DomHelper.append(document.body, '<div id="' + name + '" class="ext-grid"></div>');
+                Ext.create('Ext.grid.Panel', {
+                    border: true,
+                    bodyStyle: 'padding: 5px',
+                    height: 200,
+                    renderTo: name,
+                    columns: Ext.create('Previewer.columns.' + g).getItems(),
+                    store: Ext.create('Ext.data.ArrayStore', {
+                        fields: ['a', 'b'],
+                        data: []
+                    })
+                });
+            }
+    });
+</script>
