@@ -6,3 +6,5 @@ obj
 packages/*/
 ext
 dextop
+/mklink-ext.bat
+/Apps/Codaxy.Dextop.Previewer/Codaxy.Dextop.Previewer.Publish.xml
