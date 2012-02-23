@@ -48,7 +48,7 @@
                 Ext.create('Ext.form.Panel', {
                     border: false,
                     bodyStyle: 'padding: 5px',
-                    width: 500,
+                    width: @Model.FormWidth,
                     renderTo: name,
                     items: Ext.create('Previewer.form.' + f).getItems({ remote: remote })
                 });

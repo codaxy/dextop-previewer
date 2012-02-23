@@ -77,11 +77,19 @@ namespace Codaxy.Dextop.Previewer.Engine
 				else if (grid != -1)
 					start = grid;
 				else
-					break;
+					break;                
 
 				int pos = code.IndexOf('{', start); //class {
-				if (pos == -1)
-					break;
+                if (pos == -1)
+                    break;
+
+                var colonIndex = code.IndexOf(':', start);
+                if (colonIndex > start && colonIndex < pos)
+                {
+                    code = code.Remove(colonIndex, pos - colonIndex);
+                    pos = colonIndex;
+                }
+				
 				int braces = 1;
 				while (braces > 0 && ++pos < code.Length)
 				{

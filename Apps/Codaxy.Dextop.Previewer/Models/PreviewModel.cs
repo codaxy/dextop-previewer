@@ -12,5 +12,7 @@ namespace Codaxy.Dextop.Previewer.Models
 		public string FilePath { get; set; }
 
         public bool IsUpload { get; set; }
+
+        public int FormWidth { get; set; }
 	}	
 }

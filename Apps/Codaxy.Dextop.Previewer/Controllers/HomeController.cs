@@ -18,7 +18,7 @@ namespace Codaxy.Dextop.Previewer.Controllers
 
 		public ActionResult Index(PreviewModel data)
         {
-			var model = new Models.PreviewModel();
+            var model = new Models.PreviewModel() { FormWidth = 600 };
 
             String src = null;
 
