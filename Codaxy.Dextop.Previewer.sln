@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Dextop.Previewer", "Apps\Codaxy.Dextop.Previewer\Codaxy.Dextop.Previewer.csproj", "{AA2C6FEA-BD38-4026-87C9-6907DAB63CFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Dextop.Previewer.Engine", "Libraries\Codaxy.Dextop.Previewer.Engine\Codaxy.Dextop.Previewer.Engine.csproj", "{61E25E92-D0A9-4FB5-B375-90D4AE60DBC6}"

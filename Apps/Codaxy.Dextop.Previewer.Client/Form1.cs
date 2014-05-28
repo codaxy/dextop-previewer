@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 
 namespace Codaxy.Dextop.Previewer.Client
 {
@@ -16,18 +17,47 @@ namespace Codaxy.Dextop.Previewer.Client
         {
             InitializeComponent();
             //webBrowser1.p
+
+            watcher = new FileSystemWatcher();
+            watcher.EnableRaisingEvents = false;
+            watcher.Changed += watcher_Changed;
         }
+
+        void watcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            var fileInfo = new FileInfo(tbSrcPath.Text);
+            if (e.ChangeType == WatcherChangeTypes.Changed && e.Name.ToLower() == fileInfo.Name.ToLower())
+                Reload(true);
+        }
+
+        object lockObject = new object();
 
         private void btnGo_Click(object sender, EventArgs e)
         {
+            Reload(false);
+        }
+
+        private void Reload(bool silent)
+        {
+            if (!Monitor.TryEnter(lockObject))
+                return;
+
             try
             {
+                var fileInfo = new FileInfo(tbSrcPath.Text);
+                if (fileInfo.Exists)
+                    watcher.Path = fileInfo.DirectoryName;
                 var data = GetEncodedPostData(null, new Dictionary<string, string> { { "file", tbSrcPath.Text } });
                 webBrowser1.Navigate(tbServer.Text, "", data.data, data.headers);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!silent)
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Monitor.Exit(lockObject);
             }
         }
 
@@ -94,6 +124,37 @@ namespace Codaxy.Dextop.Previewer.Client
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Properties.Settings.Default.Save();
+        }
+
+        FileSystemWatcher watcher;
+
+        private void btnWatch_Click(object sender, EventArgs e)
+        {
+            var watching = btnWatch.Text != "Watch";            
+
+            if (watching)
+            {
+                watcher.EnableRaisingEvents = false;
+
+                btnWatch.Text = "Watch";
+            }
+            else
+            {
+                btnGo_Click(sender, e);
+
+                try
+                {
+                    watcher.EnableRaisingEvents = true;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                
+
+                btnWatch.Text = "Stop Watching";
+            }
         }
     }
 }

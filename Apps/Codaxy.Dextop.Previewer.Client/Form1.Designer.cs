@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbSrcPath = new System.Windows.Forms.TextBox();
             this.tbServer = new System.Windows.Forms.TextBox();
+            this.btnWatch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // webBrowser1
@@ -51,7 +52,7 @@
             // 
             this.btnGo.Location = new System.Drawing.Point(8, 8);
             this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(58, 55);
+            this.btnGo.Size = new System.Drawing.Size(58, 24);
             this.btnGo.TabIndex = 1;
             this.btnGo.Text = "Go";
             this.btnGo.UseVisualStyleBackColor = true;
@@ -97,11 +98,22 @@
             this.tbServer.TabIndex = 2;
             this.tbServer.Text = global::Codaxy.Dextop.Previewer.Client.Properties.Settings.Default.PreviewServerUrl;
             // 
+            // btnWatch
+            // 
+            this.btnWatch.Location = new System.Drawing.Point(8, 35);
+            this.btnWatch.Name = "btnWatch";
+            this.btnWatch.Size = new System.Drawing.Size(58, 24);
+            this.btnWatch.TabIndex = 6;
+            this.btnWatch.Text = "Watch";
+            this.btnWatch.UseVisualStyleBackColor = true;
+            this.btnWatch.Click += new System.EventHandler(this.btnWatch_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(649, 508);
+            this.Controls.Add(this.btnWatch);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbSrcPath);
@@ -124,6 +136,7 @@
         private System.Windows.Forms.TextBox tbSrcPath;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnWatch;
     }
 }
 

@@ -22,7 +22,7 @@ namespace Codaxy.Dextop.Previewer.Engine
 				GenerateInMemory = true
 			};
 			cp.ReferencedAssemblies.Add("System.dll");
-			cp.ReferencedAssemblies.Add("System.Data.dll");
+			cp.ReferencedAssemblies.Add("System.Data.dll");            
 			cp.ReferencedAssemblies.Add(Path.Combine(BinPath, "Codaxy.Dextop.dll"));
 
 			var rc = RewriteCode(code);
@@ -38,16 +38,16 @@ namespace Codaxy.Dextop.Previewer.Engine
             
             var app = new PreviewerApplication();            
             using (var ss = new MemoryStream())
-            {                
-                var columnProcessor = new Data.DextopGridHeaderPreprocessor();
-                columnProcessor.ProcessAssemblies(app, new[] { assembly }, ss);
+            {
+                IDextopAssemblyPreprocessor columnProcessor = new Data.DextopGridHeaderPreprocessor();
+                columnProcessor.ProcessAssemblies(app, new[] { assembly }, ss, null);
                 res.AppendLine(Encoding.UTF8.GetString(ss.ToArray()));
             }
 
             using (var ss = new MemoryStream())
             {
-                var formProcessor = new Forms.DextopFormPreprocessor();
-                formProcessor.ProcessAssemblies(app, new[] { assembly }, ss);
+                IDextopAssemblyPreprocessor formProcessor = new Forms.DextopFormPreprocessor();
+                formProcessor.ProcessAssemblies(app, new[] { assembly }, ss, null);
                 res.AppendLine(Encoding.UTF8.GetString(ss.ToArray()));               
             }
 
@@ -56,8 +56,9 @@ namespace Codaxy.Dextop.Previewer.Engine
 
 		public String RewriteCode(String code)
 		{
-			StringBuilder res = new StringBuilder();
-			res.AppendLine("using System;");
+			StringBuilder res = new StringBuilder();			
+            res.AppendLine("using System;");
+            res.AppendLine("using System.Collections.Generic;");            
 			res.AppendLine("using Codaxy.Dextop;");
 			res.AppendLine("using Codaxy.Dextop.Forms;");
 			res.AppendLine("using Codaxy.Dextop.Data;");
