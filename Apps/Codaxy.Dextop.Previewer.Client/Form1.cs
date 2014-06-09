@@ -26,7 +26,7 @@ namespace Codaxy.Dextop.Previewer.Client
         void watcher_Changed(object sender, FileSystemEventArgs e)
         {
             var fileInfo = new FileInfo(tbSrcPath.Text);
-            if (e.ChangeType == WatcherChangeTypes.Changed && e.Name.ToLower() == fileInfo.Name.ToLower())
+            if (e.ChangeType == WatcherChangeTypes.Changed && e.Name.ToLower().StartsWith(fileInfo.Name.ToLower()))
                 Reload(true);
         }
 
