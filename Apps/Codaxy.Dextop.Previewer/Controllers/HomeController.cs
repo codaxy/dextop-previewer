@@ -20,6 +20,9 @@ namespace Codaxy.Dextop.Previewer.Controllers
         {
             var model = new Models.PreviewModel() { FormWidth = 600 };
 
+            if (data.FormWidth > 0)
+                model.FormWidth = data.FormWidth;
+
             String src = null;
 
 			if (!String.IsNullOrEmpty(data.FilePath))

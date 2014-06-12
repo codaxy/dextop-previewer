@@ -47,7 +47,9 @@ namespace Codaxy.Dextop.Previewer.Client
                 var fileInfo = new FileInfo(tbSrcPath.Text);
                 if (fileInfo.Exists)
                     watcher.Path = fileInfo.DirectoryName;
-                var data = GetEncodedPostData(null, new Dictionary<string, string> { { "file", tbSrcPath.Text } });
+                var data = GetEncodedPostData(
+                    new Dictionary<String, String> { { "FormWidth", (this.Width - 80).ToString() } }, 
+                    new Dictionary<string, string> { { "file", tbSrcPath.Text } });
                 webBrowser1.Navigate(tbServer.Text, "", data.data, data.headers);
             }
             catch (Exception ex)
@@ -155,6 +157,11 @@ namespace Codaxy.Dextop.Previewer.Client
 
                 btnWatch.Text = "Stop Watching";
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
